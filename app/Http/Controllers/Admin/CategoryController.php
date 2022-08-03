@@ -5,26 +5,28 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCategoriesRequest;
 use App\Models\Category;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 
 class CategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return void
+     * @return Application|Factory|View
      */
     public function index()
     {
-        $categories = Category::query()->paginate(10);
+        $categories = Category::query()->paginate(5);
         return view('admin.categories.index', compact('categories'));
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return void
+     * @return Application|Factory|View
      */
     public function create()
     {
@@ -35,7 +37,7 @@ class CategoryController extends Controller
      * Store a newly created resource in storage.
      *
      * @param StoreCategoriesRequest $request
-     * @return void
+     * @return RedirectResponse
      */
     public function store(StoreCategoriesRequest $request)
     {
@@ -48,33 +50,41 @@ class CategoryController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param int $id
-     * @return void
+     * @return Application|Factory|View
      */
     public function edit($id)
     {
-
+        $category = Category::query()->find($id);
+        return view('admin.categories.edit', compact('category'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
+     * @param StoreCategoriesRequest $request
      * @param int $id
-     * @return void
+     * @return RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update(StoreCategoriesRequest $request, $id)
     {
-        //
+        $category = Category::query()->find($id);
+        //$category->slug = null; //если нужно изменить slug. Нежелательное поведение!!! для SEO
+        $category->update($request->all());
+        $request->session()->flash('success', 'Категория успешно изменена');
+        return redirect()->route('categories.index');
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param int $id
-     * @return void
+     * @return RedirectResponse
      */
     public function destroy($id)
     {
-        dd(__METHOD__);
+        /*$category = Category::query()->find($id);
+        $category->delete(); // Первый вариант удаления*/
+        Category::destroy($id); // Второй вариант удаления
+        return redirect()->route('categories.index');
     }
 }

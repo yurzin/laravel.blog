@@ -5,7 +5,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>Главная страница</h1>
+                        <h1>Страница категорий</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
@@ -71,7 +71,7 @@
                     @endif
                 </div>
                 <div class="card-footer">
-                    {{ $categories->links() }}
+                    {{ $categories->links('vendor.pagination.bootstrap-4') }}
                 </div>
             </div>
 

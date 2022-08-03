@@ -23,6 +23,7 @@ class CreatePostsTable extends Migration
             $table->integer('views', false, true)->default(0);
             $table->string('thumbnail')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

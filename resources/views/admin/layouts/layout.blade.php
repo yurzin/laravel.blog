@@ -220,6 +220,51 @@
                                 </a>
                             </li>
                         </ul>
+                    </li><li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-tags"></i>
+                            <p>
+                                Тэги
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{{ asset(route('tags.index')) }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Список тэгов</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('tags.create') }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Новый тэг</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    </li><li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-pen-fancy"></i>
+                            <p>
+                                Статьи
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{{ asset(route('posts.index')) }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Список статей</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('posts.create') }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Новая статья</p>
+                                </a>
+                            </li>
+                        </ul>
                     </li>
                 </ul>
             </nav>
@@ -252,16 +297,22 @@
     <!-- /.control-sidebar -->
     <!-- /.control-sidebar -->
 </div>
-<script src="{{asset('assets/admin/js/admin.js')}}"></script>
+<script src="{{ asset('assets/admin/js/admin.js') }}"></script>
 <script>
-    $('.nav-sidebar a').each(function () {
+    /*document.addEventListener('click', function(event) {
         let location = window.location.protocol + '//' + window.location.host + window.location.pathname;
-        let link = this.href;
-        if (link == location) {
-            $(this).addClass('active');
-            $(this).closest('.has-treeview').addClass('menu-open');
-        }
-    });
+        event.preventDefault();
+        console.log(location);
+    });*/
+
+    /*let location = window.location.protocol + '//' + window.location.host + window.location.pathname;
+    console.log('location =>' , location);
+    let link = this.href;
+    console.log('link =>' , link);
+    if (link === location) {
+        $(this).addClass('active');
+        $(this).closest('.has-treeview').addClass('menu-open');
+}*/
 </script>
 </body>
 </html>

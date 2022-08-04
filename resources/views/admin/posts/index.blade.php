@@ -54,7 +54,7 @@
                                 <td>{{ $post->title }}</td>
                                 <td><img src="{{ asset( 'uploads/' . $post->thumbnail ) }}" style="height: 30px" alt=""></td>
                                 <td>{{ $post->category->title }}</td>
-                                <td>{{ $post->tags }}</td>
+                                <td>{{ $post->tags->pluck('title')->join(', ') }}</td>
                                 <td>{{ $post->created_at }}</td>
                                 <td style="width: 100px">
                                     <a href="{{ route('posts.edit', $post) }}"

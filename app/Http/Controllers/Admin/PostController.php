@@ -13,6 +13,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -47,14 +48,9 @@ class PostController extends Controller
      */
     public function store(StorePostRequest $request)
     {
-        //dd($request->all());
         $data = $request->all();
 
-
-        if ($request->hasFile('thumbnail')) {
-            $folder = date('Y-m-d');
-            $data['thumbnail'] = $request->file('thumbnail')->store("images/{$folder}", 'public');
-        }
+        $data['thumbnail'] = Post::uploadImage($request);
 
         $post = Post::query()->create($data);
 
@@ -65,17 +61,6 @@ class PostController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param int $id
-     * @return Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param int $id
@@ -83,21 +68,39 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        return view('admin.posts.edit');
+        $post = Post::query()->find($id);
+        $tags = Tag::query()->pluck('title', 'id');
+        $categories = Category::query()->pluck('title', 'id');
+        return view('admin.posts.edit', compact('post', 'tags', 'categories'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
+     * @param StorePostRequest $request
      * @param int $id
      * @return RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update(StorePostRequest $request, $id)
     {
         $post = Post::query()->find($id);
+
+        $data = $request->all();
+
+        $data['thumbnail'] = Post::uploadImage($request, $post->thumbnail);
+
+        /*if ($request->hasFile('thumbnail')) {
+            //Storage::disk('public')->delete($post->thumbnail);
+            Storage::delete($post->thumbnail);
+            $folder = date('Y-m-d');
+            $data['thumbnail'] = $request->file('thumbnail')->storeAs("images/{$folder}", $request->file('thumbnail')->getClientOriginalName());
+        }*/
+
         //$category->slug = null; //если нужно изменить slug. Нежелательное поведение!!! для SEO
-        $post->update($request->all());
+        $post->update($data);
+
+        $post->tags()->sync($request->tags);
+
         $request->session()->flash('success', 'Статья успешно изменена');
         return redirect()->route('posts.index');
     }
@@ -111,6 +114,8 @@ class PostController extends Controller
     public function destroy($id)
     {
         $post = Post::query()->find($id);
+        $post->tags()->sync([]);
+        Storage::delete($post->thumbnail);
         $post->delete(); // Первый вариант удаления
         /*Post::destroy($id); // Второй вариант удаления*/
         return redirect()->route('posts.index')->with('success', 'Статья удалена');

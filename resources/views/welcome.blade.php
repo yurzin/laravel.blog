@@ -422,13 +422,13 @@
     @endif
         <div class="d-flex justify-center">
             <div>
-                <a href="{{ route('posts.index') }}">Статьи</a>
+                <a href="{{ route('register.create') }}">Регистрация</a>
             </div>
             <div>
-                <a href="{{ route('categories.index') }}">Категории</a>
+                <a href="{{ route('login.create') }}">Логин</a>
             </div>
             <div>
-                <a href="{{ route('tags.index') }}">Тэги</a>
+                <a href="{{ route('logout') }}">Выйти</a>
             </div>
         </div>
 </div>

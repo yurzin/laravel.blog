@@ -84,19 +84,16 @@ class PostController extends Controller
     public function update(StorePostRequest $request, $id)
     {
         $post = Post::query()->find($id);
-
         $data = $request->all();
-
         $data['thumbnail'] = Post::uploadImage($request, $post->thumbnail);
-
         /*if ($request->hasFile('thumbnail')) {
             //Storage::disk('public')->delete($post->thumbnail);
             Storage::delete($post->thumbnail);
             $folder = date('Y-m-d');
             $data['thumbnail'] = $request->file('thumbnail')->storeAs("images/{$folder}", $request->file('thumbnail')->getClientOriginalName());
         }*/
-
         //$category->slug = null; //если нужно изменить slug. Нежелательное поведение!!! для SEO
+
         $post->update($data);
 
         $post->tags()->sync($request->tags);

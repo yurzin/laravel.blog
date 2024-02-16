@@ -7,6 +7,11 @@
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <link rel="stylesheet" href="{{asset('assets/admin/css/admin.css')}}">
+    <style>
+        .ck-editor__editable_inline {
+            min-height: 300px;
+        }
+    </style>
 </head>
 <body class="hold-transition sidebar-mini">
 <!-- Site wrapper -->
@@ -220,7 +225,8 @@
                                 </a>
                             </li>
                         </ul>
-                    </li><li class="nav-item">
+                    </li>
+                    <li class="nav-item">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-tags"></i>
                             <p>
@@ -243,7 +249,8 @@
                             </li>
                         </ul>
                     </li>
-                    </li><li class="nav-item">
+                    </li>
+                    <li class="nav-item">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-pen-fancy"></i>
                             <p>
@@ -313,6 +320,49 @@
         $(this).addClass('active');
         $(this).closest('.has-treeview').addClass('menu-open');
 }*/
+</script>
+
+<script src="{{ asset('assets/admin/ckeditor5/build/ckeditor.js') }}"></script>
+<script src="{{ asset('assets/admin/ckfinder/ckfinder.js') }}"></script>
+<script>
+    ClassicEditor
+        .create(document.querySelector('#content'), {
+            ckfinder: {
+                uploadUrl: '/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files&responseType=json',
+            },
+            toolbar: [
+                'ckfinder','|', 'heading', '|', 'bold', 'italic', '|', 'undo', 'redo', 'exportPDF', 'exportWord', '|',
+                'findAndReplace', 'selectAll', '|',
+                'strikethrough', 'underline', 'code', 'subscript', 'superscript', 'removeFormat', '|',
+                'bulletedList', 'numberedList', 'todoList', '|',
+                'outdent', 'indent', '|',
+                'undo', 'redo',
+                '-',
+                'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor', 'highlight', '|',
+                'alignment', '|',
+                'link', 'insertImage', 'blockQuote', 'insertTable', 'mediaEmbed', 'codeBlock', 'htmlEmbed', '|',
+                'specialCharacters', 'horizontalLine', 'pageBreak', '|',
+                'textPartLanguage', '|',
+                'sourceEditing'],
+            licenseKey: '',
+        })
+        .then(content => {
+            window.content = content;
+        })
+        .catch(error => {
+            console.error('Oops, something went wrong!');
+            console.error('Please, report the following error on https://github.com/ckeditor/ckeditor5/issues with the build id and the error stack trace:');
+            console.warn('Build id: hfka56oty279-ovdg5af87pl4');
+            console.error(error);
+        });
+
+    ClassicEditor
+        .create(document.querySelector('#description'), {
+            toolbar: ['heading', '|', 'bold', 'italic', '|', 'undo', 'redo']
+        })
+        .catch(error => {
+            console.error(error);
+        });
 </script>
 </body>
 </html>

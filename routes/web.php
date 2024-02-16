@@ -26,7 +26,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'admi
 //Route::get('/admin', 'Admin\MainController@index')->name('admin.index');
 
 Route::group(['middleware' => 'guest'], function () {
-    Route::get('/register', 'UserController@create')->name('register.create');
+    Route::get('/register', 'UserController@create')->name('register');
     Route::post('/register', 'UserController@store')->name('register.store');
     Route::get('/login', 'UserController@loginForm')->name('login.create');
     Route::post('/login', 'UserController@login')->name('login');

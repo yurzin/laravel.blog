@@ -53,7 +53,7 @@
                                 <td>{{ $post->id }}</td>
                                 <td>{{ $post->title }}</td>
                                 <td><img src="{{ asset( 'uploads/' . $post->thumbnail ) }}" style="height: 30px" alt=""></td>
-                                <td>{{ $post->category->title }}</td>
+                                <td>{{ $post->category ? $post->category->title : '-'}}</td>
                                 <td>{{ $post->tags->pluck('title')->join(', ') }}</td>
                                 <td>{{ $post->created_at }}</td>
                                 <td style="width: 100px">

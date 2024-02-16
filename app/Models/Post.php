@@ -52,7 +52,7 @@ class Post extends Model
             }
             $folder = date('Y-m-d');
             //return $request->file('thumbnail')->storeAs("images/{$folder}", $request->file('thumbnail')->getClientOriginalName());
-            return $request->file('thumbnail')->storeAs("images/{$folder}", $request->file('thumbnail')->getClientOriginalName());
+            return $request->file('thumbnail')->storeAs("images/{$folder}", 'name_123');
         }
         return null;
     }

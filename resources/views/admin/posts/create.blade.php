@@ -46,7 +46,7 @@
 
                     <div class="form-group">
                         <label for="content" class="form-label">Текст статьи</label>
-                        <textarea rows="5" class="form-control @error('content') is-invalid @enderror" id="title" name="content" placeholder="Текст статьи..."></textarea>
+                        <textarea rows="5" class="form-control @error('content') is-invalid @enderror" id="content" name="content" placeholder="Текст статьи..."></textarea>
                     </div>
                     @foreach ($errors->get('content') as $message)
                         <div class="alert alert-danger">

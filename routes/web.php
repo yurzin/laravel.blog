@@ -17,6 +17,8 @@ Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
+Route::get('/home', 'SiteController@home')->name('home');
+
 Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'admin'], function () {
     Route::get('/', 'MainController@index')->name('admin.index');
     Route::resource('/categories', 'CategoryController');
